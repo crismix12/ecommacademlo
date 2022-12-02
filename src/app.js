@@ -5,7 +5,7 @@ const db = require('./utils/database');
 const handleError = require('./middlewares/error.middleware');
 const initModels = require('./models/initModels');
 
-const {userRoutes, authRoutes, productsRoutes, productsInCartRoutes, orderRoutes} = require('./Routes');
+const {userRoutes, authRoutes, productsRoutes, productsInCartRoutes, orderRoutes} = require('./routes');
 
 const app = express();
 
