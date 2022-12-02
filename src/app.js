@@ -4,7 +4,6 @@ const cors = require("cors");
 const db = require('./utils/database');
 const handleError = require('./middlewares/error.middleware');
 const initModels = require('./models/initModels');
-// const userRoutes = require('./Routes/users.routes');
 
 const {userRoutes, authRoutes, productsRoutes, productsInCartRoutes, orderRoutes} = require('./Routes');
 
