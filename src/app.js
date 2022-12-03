@@ -24,7 +24,8 @@ db.sync({ force: false })
     .catch((error) => console.log(error))
 
 app.get('/', (req, res) => {
-    console.log("Bienvenido al server");
+    // console.log("Bienvenido al server");
+    res.json("Crismi's Ecommerce Academlo UP!");
 });
 
 app.use('/api/v1', userRoutes);
