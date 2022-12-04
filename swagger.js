@@ -15,6 +15,8 @@ const options = {
         "./src/routes/auth.routes.js",
         "./src/routes/products.routes.js",
         "./src/routes/productsInCart.routes.js",
+        "./src/routes/orders.routes.js",
+        "./src/models/orders.models.js",
         "./src/models/products.models.js",
         "./src/models/users.models.js",
         "./src/models/productsInCart.models.js"
