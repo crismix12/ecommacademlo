@@ -40,7 +40,21 @@ const { DataTypes } = require('sequelize');
  *           example: 2540.33
  *         status:
  *           type: string
- *           example: pendant                
+ *           example: pendant      
+ *     completeorder:
+ *       type: object
+ *       properties:
+ *         orderId:
+ *           type: integer
+ *           example: 9
+ *         cartId:
+ *           type: integer
+ *           example: 3
+ *     completeresponse:
+ *       type: object
+ *       properties:
+ *         type: string
+ *         example: order completed        
  *   securitySchemes:
  *     bearerAuth:
  *       type: http

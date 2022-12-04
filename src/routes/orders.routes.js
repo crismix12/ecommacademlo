@@ -71,7 +71,35 @@ const router = Router();
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: "#/components/schemas/getorderresponse" 
+ *                     $ref: "#/components/schemas/getorderresponse"
+  * /api/v1/orders/complete:
+ *   post:
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Complete an order
+ *     tags: [orders]
+ *     requestBody:
+ *       description: To complete an order you need orderId and cartId
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/completeorder"
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     {$ref: "#/components/schemas/completeresponse" } 
  */
 
 
