@@ -53,8 +53,9 @@ const { DataTypes } = require('sequelize');
  *     completeresponse:
  *       type: object
  *       properties:
- *         type: string
- *         example: order completed        
+ *         response:
+ *           type: string
+ *           example: order completed        
  *   securitySchemes:
  *     bearerAuth:
  *       type: http
