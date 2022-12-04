@@ -72,7 +72,7 @@ const router = Router();
  *                   type: array
  *                   items:
  *                     $ref: "#/components/schemas/getorderresponse"
-  * /api/v1/orders/complete:
+ * /api/v1/orders/complete:
  *   post:
  *     security:
  *       - bearerAuth: []
