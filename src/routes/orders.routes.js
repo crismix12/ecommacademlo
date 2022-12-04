@@ -43,6 +43,35 @@ const router = Router();
  *                   type: array
  *                   items:
  *                     $ref: "#/components/schemas/orderresponse" 
+ * /api/v1/orders/{userId}:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Get an order from an user
+ *     tags: [orders]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         description: user id 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: "#/components/schemas/getorderresponse" 
  */
 
 

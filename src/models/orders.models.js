@@ -26,6 +26,21 @@ const { DataTypes } = require('sequelize');
  *         totalPrice:
  *           type: number
  *           example: 2304.32
+ *     getorderresponse:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 9
+ *         userId:
+ *           type: integer
+ *           example: 10
+ *         totalPrice:
+ *           type: number
+ *           example: 2540.33
+ *         status:
+ *           type: string
+ *           example: pendant                
  *   securitySchemes:
  *     bearerAuth:
  *       type: http
