@@ -7,7 +7,7 @@ const router = Router();
 
 /**
  * @openapi
- * /api/v1/orders/:
+ * /api/v1/orders/{cartId}:
  *   post:
  *     security:
  *       - bearerAuth: []
