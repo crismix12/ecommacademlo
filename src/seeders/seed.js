@@ -1,141 +1,186 @@
 const db = require('../utils/database');
-const {Users, Participants, Messages, Conversations} = require('../models');
+const {Users, Cart, Products, ProductsInCart, Orders, ProductsInOrder} = require('../models');
 const initModels = require('../models/initModels');
 
 initModels();
 const users = [
     {
-        firstname: 'Maria', 
-        lastname: 'Godoy', 
+        username: 'crismi', 
+        email: 'crismi@gmail.com', 
+        password: '1234'
+    },
+    {
+        username: 'maria', 
         email: 'maria@gmail.com', 
-        password: '1234', 
-        phone: '000000000'
+        password: '1234'
     },
     {
-        firstname: 'German', 
-        lastname: 'Silva', 
-        email: 'german@gmail.com', 
-        password: '123456', 
-        phone: '00000001456'
+        username: 'pablo', 
+        email: 'pablo@gmail.com', 
+        password: '1234'
     },
     {
-        firstname: 'jose', 
-        lastname: 'tejero', 
-        email: 'jose@gmail.com', 
-        password: '1234', 
-        phone: '999999999'
-    },
+        username: 'carlos', 
+        email: 'carlos@gmail.com', 
+        password: '1234'
+    }    
 ];
 
-const conversations = [
+const carts = [
     {
-        title: 'Con el compa',
-        createdBy: 2,
+        userId: 1,
+        totalPrice: 0.0
     },
     {
-        title: 'Con los compas',
-        type: 'group',
-        createdBy: 1
+        userId: 2,
+        totalPrice: 0.0
     },
     {
-        title: 'No idea',
-        createdBy: 3,
+        userId: 3,
+        totalPrice: 0.0
+    },
+    {
+        userId: 4,
+        totalPrice: 0.0
     }
 ]
 
-const participants = [
+const products = [
     {
-        conversationId: 1,
+        name: "tv",
+        price: 1554.42,
+        availableQty: 5,
+        userId: 1
+    },
+    {
+        name: "mouses",
+        price: 319.99,
+        availableQty: 10,
+        userId: 1
+    },
+    {
+        name: "keyboards",
+        price: 599.99,
+        availableQty: 2,
+        userId: 1
+    },
+    {
+        name: "earbuds",
+        price: 229.99,
+        availableQty: 0,
+        userId: 1
+    },
+    {
+        name: "earbuds",
+        price: 330.0,
+        availableQty: 10,
         userId: 2
     },
     {
-        conversationId: 1,
-        userId: 1
-    },
-    {
-        conversationId: 2,
-        userId: 1
-    },
-    {
-        conversationId: 2,
+        name: "keyboards",
+        price: 510.0,
+        availableQty: 4,
         userId: 2
     },
     {
-        conversationId: 2,
+        name: "headset",
+        price: 710.0,
+        availableQty: 8,
+        userId: 2
+    },
+    {
+        name: "mouses",
+        price: 110.0,
+        availableQty: 0,
+        userId: 2
+    },
+    {
+        name: "iphone",
+        price: 1100.0,
+        availableQty: 9,
         userId: 3
     },
     {
-        conversationId: 3,
+        name: "earbuds",
+        price: 310.0,
+        availableQty: 8,
         userId: 3
     },
     {
-        conversationId: 3,
-        userId: 1
+        name: "tv",
+        price: 1550.0,
+        availableQty: 6,
+        userId: 3
+    },
+    {
+        name: "keyboards",
+        price: 510.0,
+        availableQty: 0,
+        userId: 3
     },
 ]
+//antes de generar la orden tiene que tener productos en el carrito
+//maria compra dos una tv y un mouse al usuario 1
+const productsInCart = [
+    {
+        cartId: 2,
+        productId: 1,
+        quantity: 1,
+        price: 1554.42
+    },
+    {
+        cartId: 2,
+        productId: 2,
+        quantity: 1,
+        price: 319.99
+    }
+]
 
-const messages = [
+//Maria genera una Orden
+const orders = [
     {
-        senderId: 2,
-        conversationId: 1,
-        message: 'Hola'
+        userId: 2,
+        totalPrice: 1874.41
+    }
+]
+
+//una vez creada la orden se generan los productos del carrito en un producto en orden
+const productsInOrder = [
+    {
+        orderId: 1,
+        productId: 1,
+        quantity: 1,
+        price: 1554.42 
     },
     {
-        senderId: 1,
-        conversationId: 1,
-        message: 'Quien eres'
-    },
-    {
-        senderId: 2,
-        conversationId: 1,
-        message: 'No lo se, dime tu!'
-    },
-    {
-        senderId: 3,
-        conversationId: 2,
-        message: 'salimos o k?'
-    },
-    {
-        senderId: 1,
-        conversationId: 2,
-        message: 'No puedo ando con express y sequelize'
-    },
-    {
-        senderId: 3,
-        conversationId: 2,
-        message: 'No me Digas!'
-    },
-    {
-        senderId: 2,
-        conversationId: 2,
-        message: 'Yo ya envie los proyectos'
-    },
-    {
-        senderId: 3,
-        conversationId: 3,
-        message: 'Ya estoy aqui'
-    },
-    {
-        senderId: 1,
-        conversationId: 3,
-        message: 'Voy bajando'
-    },
-];
+        orderId: 1,
+        productId: 2,
+        quantity: 1,
+        price: 319.99        
+    }
+]
+
 
 db.sync({ force: true }).then(() => {
     console.log("Sinronizado");
     users.forEach(async (user) => await Users.create(user));
     setTimeout(() => {
-      conversations.forEach(
-        async (conversation) => await Conversations.create(conversation)
+        carts.forEach(
+        async (conversation) => await Cart.create(conversation)
       );
     }, 100);
     setTimeout(() => {
-      participants.forEach(
-        async (participant) => await Participants.create(participant)
+        products.forEach(
+        async (participant) => await Products.create(participant)
       );
     }, 200);
     setTimeout(() => {
-      messages.forEach(async (message) => await Messages.create(message));
+        productsInCart.forEach(async (message) => await ProductsInCart.create(message));
     }, 300);
+    setTimeout(() => {
+        orders.forEach(async (message) => await Orders.create(message));
+    }, 400);
+    setTimeout(() => {
+        productsInOrder.forEach(async (message) => await ProductsInOrder.create(message));
+    }, 500);
   });

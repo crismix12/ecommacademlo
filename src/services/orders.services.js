@@ -2,8 +2,9 @@ const { Orders, ProductsInCart, ProductsInOrder, Users, Products } = require("..
 
 
 class OrdersServices {
-    static async create(cartId, newOrder) {
+    static async create(cartId, userId) {
         try {
+            let totalPrice = 0.0;
             //una vez que existe la orden preguntamos por los productos en carro
             const productsInCart = await ProductsInCart.findAll({
                 where:
@@ -11,8 +12,17 @@ class OrdersServices {
                     cartId,
                     status: true
                 }
-            })
+            });
+
             if (productsInCart.length !== 0) {
+                productsInCart.forEach((product) => {
+                    totalPrice += product.dataValues.quantity * product.dataValues.price;
+                });
+                //generamos la orden con el precio de todos los elementos del carrito
+                const newOrder = {
+                    userId,
+                    totalPrice
+                }
                 //generamos la creacion de la orden
                 const createOrder = await Orders.create(newOrder);
                 //obtenemos el id de la orden Generada
@@ -33,7 +43,7 @@ class OrdersServices {
                     const generateProductsInOrder = await ProductsInOrder.create(product);
                     // console.log(generateProductsInOrder);
                 })
-                return { message: "Order Created!"}
+                return createOrder;
             } else {
                 return { message: "No products in cart" }
             }
@@ -65,6 +75,8 @@ class OrdersServices {
     }
 
     static async complete(toUpdate, orderId, cartId){
+        // const id = orderId;
+        // console.log(orderId);
         try {
             const orders = await Orders.update(toUpdate, { 
                 where: { id: orderId } 

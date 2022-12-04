@@ -3,9 +3,9 @@ const { OrdersServices } = require("../services");
 
 const createOrder = async(req, res, next) => {
     try {
-        const newOrder = req.body;
+        const {userId} = req.body;
         const {cartId} = req.params;
-        const result = await OrdersServices.create(cartId, newOrder);
+        const result = await OrdersServices.create(cartId, userId);
         res.status(201).json(result);         
     } catch (error) {
         next({
@@ -33,11 +33,11 @@ const getOrders = async(req, res, next) => {
 
 const completeOrder = async(req, res, next) => {
     try {
-        const {id, cartId} = req.body;
+        const {orderId, cartId} = req.body;
         const toUpdate = {
             status: "complete",
         }
-        const result = await OrdersServices.complete(toUpdate, id, cartId);
+        const result = await OrdersServices.complete(toUpdate, orderId, cartId);
         return res.json(result);
     } catch (error) {
         next({
